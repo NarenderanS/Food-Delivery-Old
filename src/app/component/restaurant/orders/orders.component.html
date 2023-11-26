@@ -1,0 +1,70 @@
+<div class="container my-3 col-9">
+  <!-- Title -->
+  <div class="p-3 border-bottom">
+    <h5 class="mb-0 fw-bold">Orders</h5>
+    <p class="small mb-0">2 items</p>
+  </div>
+  <table class="table">
+    <thead>
+      <tr class="text-warning">
+        <th scope="col">Order Id</th>
+        <th scope="col">Date & Time</th>
+        <th scope="col">Username</th>
+        <th scope="col">Orders</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let order of orders">
+      <tr>
+        <th scope="row">1</th>
+        <td>10/11/2023</td>
+        <td>Mark</td>
+        <td>
+          <tr>
+            <th>S.No</th>
+            <th>Product Name</th>
+            <th>Count</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><p class="mb-0 text-wrap">Chicken Briyani</p></td>
+            <td><p class="mb-0">1</p></td>
+          </tr>
+          <tr>
+            <td> <div>
+              <p class="small text-muted mb-0">Delivery Address</p>
+  
+              <p class="small text-muted mb-0">
+                {{ order.address.address }},{{ order.address.city }},{{
+                  order.address.zipcode
+                }}
+              </p>
+            </div></td>
+          </tr>
+        </td>
+        <td>
+          <p class="small text-muted mb-0 text-wrap">
+            No:13, Dubai cross street, Dubai
+          </p>
+        </td>
+        <td>
+          <div>
+            <button
+              class="btn btn-success"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              Order Status
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li class="dropdown-item">Pending</li>
+              <li class="dropdown-item">Out for Delivery</li>
+              <li class="dropdown-item">Delivered</li>
+              <li class="dropdown-item">Cancelled</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

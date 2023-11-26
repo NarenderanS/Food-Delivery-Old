@@ -1,0 +1,101 @@
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-6">
+        <ng-lottie [options]="options"></ng-lottie>
+      </div>
+      <div class="col-4">
+        <h2 class="display-4 text-primary mb-3">Login</h2>
+        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+          <!-- Username input -->
+          <div class="form-outline mb-3">
+            <label class="form-label" for="username">UserName</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter User Name"
+              name="username"
+              ngModel
+              required
+              pattern="^[a-zA-Z0-9\- ']+$"
+              minlength="4"
+              #modelName="ngModel"
+              [ngClass]="
+                modelName.invalid && modelName.dirty ? 'is-invalid' : ''
+              "
+            />
+            <p
+                *ngIf="modelName?.errors?.['minlength']?.['requiredLength']&& modelName.dirty && !modelName?.errors?.['pattern']"
+                class="text-danger"
+              >
+                Please enter name of length
+                {{modelName?.errors?.['minlength']?.['requiredLength'] | json}}
+              </p>
+              <p
+                *ngIf="modelName?.errors?.['required'] && modelName.dirty"
+                class="text-danger"
+              >
+                Please enter Name
+              </p>
+              <p *ngIf="modelName?.errors?.['pattern']" class="text-danger">
+                Name should contain only alphabets
+              </p>
+          </div>
+            
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <label class="form-label" for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              placeholder="Enter Password"
+              ngModel
+              required
+              minlength="4"
+              #modelpassword="ngModel"
+              [ngClass]="
+                modelpassword.invalid && modelpassword.dirty ? 'is-invalid' : ''
+              "
+            />
+
+            <p
+              *ngIf="modelpassword?.errors?.['minlength']?.['requiredLength']&& modelpassword.dirty && !modelpassword?.errors?.['pattern']"
+              class="text-danger"
+            >
+              Please enter password of length
+              {{modelpassword?.errors?.['minlength']?.['requiredLength'] | json}}
+            </p>
+            <p
+              *ngIf="modelpassword?.errors?.['required'] && modelpassword.dirty"
+              class="text-danger"
+            >
+              Please enter Password
+            </p>
+          </div>
+
+          <div class="d-flex align-items-center mb-4">
+            <span>Need an account?</span>
+            <a
+              routerLink="/register"
+              class="text-green text-decoration-none px-2"
+              >Register here</a
+            >
+          </div>
+
+          <!-- Submit button -->
+          <div class="d-grid gap-2">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="!loginForm.valid"
+            >
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
