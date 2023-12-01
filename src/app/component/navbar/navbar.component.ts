@@ -15,7 +15,7 @@ export class NavbarComponent {
     private authService: AuthService,
     private router: Router,
     private storageService: StorageService,
-    private cartService:CartService
+    private cartService: CartService
   ) {}
   isLoggedIn(): boolean {
     return this.storageService.isUserLoggedIn();
@@ -29,20 +29,20 @@ export class NavbarComponent {
     if (this.storageService.getLoggedInUser().role === CONSTANT.ADMIN)
       return true;
     return false;
-  }restaurant(): boolean {
+  }
+  restaurant(): boolean {
     if (this.storageService.getLoggedInUser().role === CONSTANT.RESTAURANT)
       return true;
     return false;
   }
- 
+
   logout(): void {
     this.authService.logout();
   }
   navBar(): boolean {
     return this.router.url !== '/';
   }
-  getCartCount():number{
+  getCartCount(): number {
     return this.cartService.getCartCount();
-
   }
 }

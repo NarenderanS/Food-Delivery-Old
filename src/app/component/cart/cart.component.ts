@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AnimationOptions } from 'ngx-lottie';
 import { count } from 'rxjs';
 import { Address } from 'src/app/model/address';
 import { AppResponse } from 'src/app/model/appResponse';
@@ -17,9 +18,13 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './cart.component.html',
 })
 export class CartComponent implements OnInit {
+  options: AnimationOptions = {
+    path: '/assets/emptyCart.json',
+  };
   products: Product[] = [];
   addresses: Address[] = [];
   userCart: Cart[] = [];
+  deliveryAddressId:number=0;
   user: AppUser = this.storageService.getLoggedInUser();
   constructor(
     private userService: UserService,
@@ -100,9 +105,6 @@ export class CartComponent implements OnInit {
       },
     });
   }
-  // getCartCount(): number {
-  //   return this.cartService.getCartCount();
-  // }
   getCartCount(): number {
     let count = 0;
     for (let i of this.userCart) {
@@ -119,17 +121,27 @@ export class CartComponent implements OnInit {
     }
     return 0;
   }
+  getPrice():number{
+    let total:number=0;
+    for(let i of this.userCart){
+      total+=i.price
+    }
+    return total
+  }
 
   orderAddress(orderAddressForm: NgForm) {
-    // console.log(orderAddressForm.value);
+    this.deliveryAddressId=orderAddressForm.value.orderAddressId;
+    console.log(this.deliveryAddressId)
   }
   placeOrder(): void {
+    console.log("placed")
     this.orderService
-      .placeOrder({ userId: this.user.id, addressId: 1 })
+      .placeOrder({ userId: this.user.id, addressId:this.deliveryAddressId })
       .subscribe({
         next: (response: AppResponse) => {
           this.userCart = [];
         },
       });
+      this.deliveryAddressId=0;
   }
 }

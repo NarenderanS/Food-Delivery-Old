@@ -11,5 +11,6 @@ export interface AppUser {
   orderList: Order[];
   gender: String;
   phoneNo: String;
-  addressList:Address[]
+  addressList: Address[];
+  restaurantId: number;
 }

@@ -10,13 +10,24 @@ import { Category } from '../model/category';
   providedIn: 'root',
 })
 export class CategoryService {
-  
   constructor(private http: HttpClient) {}
   getAllCategory(): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}/category/all`);
   }
-  addCategory(category: Category):Observable<AppResponse> {
-    return this.http.post<AppResponse>(`${urlEndpoint.baseUrl}/restaurant/category`,category)
+  addCategory(category: FormData, categoryId: number): Observable<AppResponse> {
+    if (categoryId === 0) {
+      return this.http.post<AppResponse>(
+        `${urlEndpoint.baseUrl}/restaurant/category`,
+        category
+      );
+    }
+    return this.http.put<AppResponse>(
+      `${urlEndpoint.baseUrl}/admin/category`,
+      category
+    );
+  }
+  downloadPhoto(categoryId: number): any {
+    return `${urlEndpoint.baseUrl}/photo/downloadFile/category/${categoryId}`;
   }
   deleteCategory(id: number): Observable<AppResponse> {
     return this.http.delete<AppResponse>(

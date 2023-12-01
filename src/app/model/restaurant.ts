@@ -3,7 +3,8 @@ import { Product } from "./product";
 
 export interface Restaurant {
     id:number;
-    userId:number;
+    username?:String;
+    userId?:number
     title:String;
     address:Address;
     products?:Product[]

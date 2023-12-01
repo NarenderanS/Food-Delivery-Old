@@ -1,4 +1,191 @@
-<!-- Modal -->
+<div class="container my-3 d-flex justify-content-around">
+  <!-- Cart -->
+  <div class="col-7 bg-white rounded-3 position-relative mt-4">
+    <div >
+      <!-- Title -->
+      <div class="p-3 border-bottom">
+        <h5 class="mb-0 fw-bold">Your Cart</h5>
+        <p class="small mb-0">
+          {{
+            getCartCount() > 0
+              ? getCartCount() == 1
+                ? getCartCount() + " Item"
+                : getCartCount() + " Items"
+              : ""
+          }}
+        </p>
+      </div>
+      <div
+        class="d-flex justify-content-around align-items-center border-bottom p-3"
+      >
+        <div class="h5 col-2">Item</div>
+        <div class="h5 col-1 text-center">Price</div>
+        <div class="h5 col-3 text-center">Quantity</div>
+        <div class="h5 col-2">Total Price</div>
+      </div>
+      <!-- Items -->
+      <div class="align-items-center" *ngFor="let product of userCart">
+        <!-- Item -->
+        <div
+          class="d-flex align-items-center justify-content-around py-2 px-3 border-bottom"
+        >
+          <!-- Item Details -->
+          <div class="px-2 col-3">
+            <p class="mb-0">{{ product.productName }}</p>
+            <p class="small text-muted mb-0">
+              {{ product.restaurantName.substring(0, 15) }}...
+            </p>
+          </div>
+          <!-- Price -->
+          <div class="col-1 text-center ms-3">₹ {{ product.price }}</div>
+          <!-- Plus and Minus -->
+          <div
+            class="d-flex align-items-center justify-content-between rounded-5 border px-1 ms-auto"
+          >
+            <div class="btn">
+              <i
+                class="fa fa-minus text-danger"
+                (click)="addToCart(product.productId, '-')"
+              ></i>
+            </div>
+            <div class="">{{ product.count }}</div>
+            <div class="btn">
+              <i
+                class="fa fa-plus text-success"
+                (click)="addToCart(product.productId, '+')"
+              ></i>
+            </div>
+          </div>
+          <div class="ps-2 me-auto">
+            <i
+              class="fa fa-trash-can text-danger btn"
+              (click)="deleteFromCart(product.id)"
+            ></i>
+            <!-- <div class="text-end">₹ {{ product.price }}</div> -->
+            <!-- Total Price -->
+          </div>
+          <div class="me-auto">₹ {{ product.price * product.count }}</div>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngIf="getCartCount() === 0" class="align-items-center mb-0">
+      <!-- Title 
+      <div class="p-3 border-bottom">
+        <h5 class="mb-0 fw-bold">Your Cart is Empty</h5>
+      </div>
+      <div class="mb-0"><ng-lottie [options]="options"></ng-lottie></div>
+    </div> -->
+  </div>
+  <!-- Recommended -->
+  <div class="col-4">
+    <div
+      class="bg-white border rounded overflow-auto position-relative mt-4 mb-5"
+      style="max-height: 430px"
+    >
+      <div class="p-3 border-bottom">
+        <h5 class="mb-0 fw-bold">Recommended</h5>
+        <!-- <p class="small mb-0">4 items from <span class="text-success">Abc</span></p> -->
+      </div>
+      <div class="" *ngFor="let product of products">
+        <div
+          class="d-flex align-items-center py-2 px-3"
+          *ngIf="getProductCount(product.id) === 0"
+        >
+          <!-- <div class="success-dot"></div> -->
+          <div class="px-2">
+            <p class="mb-0">{{ product.title.substring(0, 10) }}...</p>
+            <p class="fw-lighter text-dull">
+              {{ product.description.substring(0, 12) }} ...
+            </p>
+          </div>
+          <!-- button -->
+
+          <div *ngIf="getProductCount(product.id) === 0" class="ms-auto">
+            <button
+              class="rounded-5 border btn-warning btn"
+              (click)="addToCart(product.id, '+')"
+            >
+              Add to Cart
+            </button>
+          </div>
+          <!-- <div
+                *ngIf="getProductCount(product.id) > 0"
+                class="d-flex align-items-center justify-content-center rounded-5 border px-2 ms-auto"
+              >
+                <button
+                  class="btn"
+                  (click)="addToCart(product.id, '-')"
+                  (click)="getProductCount(product.id)"
+                >
+                  <i
+                    class="fa fa-minus text-danger"
+                    (click)="addToCart(product.id, '-')"
+                  ></i>
+                </button>
+                <div>{{ getProductCount(product.id) }}</div>
+                <button class="btn" (click)="addToCart(product.id, '+')">
+                  <i
+                    class="fa fa-plus text-success"
+                    (click)="addToCart(product.id, '+')"
+                  ></i>
+                </button>
+              </div> -->
+
+          <div class="ms-auto align-items-center">
+            <div class="text-end">₹ {{ product.price }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Order and Address -->
+<div
+  class="container d-flex justify-content-between"
+  *ngIf="getCartCount() > 0"
+>
+  <div class="col-7 d-flex justify-content-around">
+    <!-- Address -->
+    <div class="ps-3">
+      <!-- Button trigger modal -->
+      <button
+        class="rounded-5 p-4 bg-white"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        (click)="getUserAddress()"
+      >
+        <span>
+          <h5 class="fw-bold">Delivery Address</h5>
+          <p class="small text-muted mb-0">
+            Select a saved delivery address or add a new address
+          </p>
+        </span>
+      </button>
+    </div>
+    <!-- For Order -->
+    <div class="align-items-center">
+      <!-- Total -->
+      <div class="d-flex justify-content-around h5">
+        <div>Sub Total</div>
+        <div>₹ {{ getPrice() }}</div>
+      </div>
+      <!-- CheckOut -->
+      <button
+        class="btn btn-warning d-flex flex-column text-center"
+        [disabled]="deliveryAddressId === 0"
+        (click)="placeOrder()"
+      >
+        <h5 class="fw-bold mx-4 pt-1">Checkout</h5>
+      </button>
+    </div>
+  </div>
+
+  <div class="col-4"></div>
+</div>
+
+<!-- For Address -->
+<!-- Address form for Delivery -->
 <div
   class="modal fade"
   id="exampleModal"
@@ -26,382 +213,175 @@
           #orderAddressForm="ngForm"
           (ngSubmit)="orderAddress(orderAddressForm)"
         >
-          <select class="pb-3 form-control">
-            <option>Choose Delivery Address</option>
-            <option
-              class="custom-select"
-              value="address.id"
-              name="address"
-              *ngFor="let address of addresses"
+          <div class="form-floating mb-3">
+            <select
+              class="form-control form-select"
+              ngModel
+              id="orderAddressId"
+              name="orderAddressId"
+              #addressId="ngModel"
+              required
             >
-              <span class="ps-2"
-                >{{ address.address }}, {{ address.city }},
-                {{ address.zipcode }}</span
+              <option selected disabled value="">
+                Choose Delivery Address
+              </option>
+              <option
+                value="{{ address.id }}"
+                *ngFor="let address of addresses"
               >
-            </option>
-          </select>
+                <span class="ps-2"
+                  >{{ address.address }}, {{ address.city }},
+                  {{ address.zipcode }}</span
+                >
+              </option>
+            </select>
+            <label for="form-label" for="orderAddressId"
+              >Delivery Address</label
+            >
+          </div>
+
+          <div class="text-center">or</div>
+          <!-- form for new addres -->
+          <div>
+            <form #addressForm="ngForm" (ngSubmit)="addAddress(addressForm)">
+              <!-- Address -->
+              <div class="form-control">
+                <div class="text-center mb-3">Add New Address</div>
+
+                <!-- address -->
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    placeholder="Address"
+                    name="address"
+                    ngModel
+                    required
+                    pattern="^[a-zA-Z0-9\- ']+$"
+                    minlength="10"
+                    #modelAddress="ngModel"
+                    [ngClass]="
+                      modelAddress.invalid && modelAddress.dirty
+                        ? 'is-invalid'
+                        : ''
+                    "
+                  />
+                  <label class="form-label" for="address">Address</label>
+                  <p
+                    *ngIf="modelAddress?.errors?.['minlength']?.['requiredLength']&& modelAddress.dirty && !modelAddress?.errors?.['pattern']"
+                    class="text-danger"
+                  >
+                    Please enter address minimum of length
+                    {{modelAddress?.errors?.['minlength']?.['requiredLength'] | json}}
+                  </p>
+
+                  <p
+                    *ngIf="modelAddress?.errors?.['required'] && modelAddress.dirty"
+                    class="text-danger"
+                  >
+                    Please enter address
+                  </p>
+                </div>
+                <div class="row">
+                  <!-- City -->
+                  <div class="form-floating mb-3 col">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      placeholder="City"
+                      name="city"
+                      ngModel
+                      required
+                      pattern="^[a-zA-Z\- ']+$"
+                      minlength="4"
+                      #modelCity="ngModel"
+                      [ngClass]="
+                        modelCity.invalid && modelCity.dirty ? 'is-invalid' : ''
+                      "
+                    />
+                    <label class="form-label ms-3" for="city">City</label>
+                    <p
+                      *ngIf="modelCity?.errors?.['minlength']?.['requiredLength']&& modelCity.dirty && !modelCity?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      Please enter city minimum of length
+                      {{modelCity?.errors?.['minlength']?.['requiredLength'] | json
+
+                      }}.
+                    </p>
+                    <p
+                      *ngIf="modelCity?.errors?.['required'] && modelCity.dirty"
+                      class="text-danger"
+                    >
+                      Please enter city.
+                    </p>
+                    <p
+                      *ngIf="modelCity?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      City should contain only alphabets.
+                    </p>
+                  </div>
+                  <!-- PinCode -->
+                  <div class="form-floating mb-3 col">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="pinCode"
+                      placeholder="PinCode"
+                      name="zipcode"
+                      ngModel
+                      required
+                      pattern="^^((\\+91-?)|0)?[0-9]{6}$"
+                      minlength="6"
+                      #modelPinCode="ngModel"
+                      [ngClass]="
+                        modelPinCode.invalid && modelPinCode.dirty
+                          ? 'is-invalid'
+                          : ''
+                      "
+                    />
+                    <label class="form-label ms-3" for="pinCode">Pincode</label>
+                    <p
+                      *ngIf="modelPinCode?.errors?.['required'] && modelPinCode.dirty"
+                      class="text-danger"
+                    >
+                      Please enter Pincode.
+                    </p>
+                    <p
+                      *ngIf="modelPinCode?.errors?.['pattern']"
+                      class="text-danger"
+                    >
+                      PinCode must contain 6 digits.
+                    </p>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <button
+                    type="submit"
+                    class="btn btn-outline-success"
+                    [disabled]="!addressForm.valid"
+                  >
+                    Add
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn btn-warning"
+              data-bs-dismiss="modal"
+              [disabled]="!orderAddressForm.valid"
+            >
+              Confirm Delivery Address
+            </button>
+          </div>
         </form>
-        <div>or</div>
-        <!-- form for new addres -->
-        <div>
-          <div>Add new Address</div>
-          <form #addressForm="ngForm" (ngSubmit)="addAddress(addressForm)">
-            <!-- Address -->
-            <div class="form-control">
-              <!-- address -->
-              <div class="form-outline my-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="address"
-                  name="address"
-                  ngModel
-                  required
-                  pattern="^[a-zA-Z0-9\- ']+$"
-                  minlength="4"
-                  #modelAddress="ngModel"
-                  [ngClass]="
-                    modelAddress.invalid && modelAddress.dirty
-                      ? 'is-invalid'
-                      : ''
-                  "
-                />
-                <p
-                  *ngIf="modelAddress?.errors?.['minlength']?.['requiredLength']&& modelAddress.dirty && !modelAddress?.errors?.['pattern']"
-                  class="text-danger"
-                >
-                  Please enter address minimum of length
-                  {{modelAddress?.errors?.['minlength']?.['requiredLength'] | json}}
-                </p>
-
-                <p
-                  *ngIf="modelAddress?.errors?.['required'] && modelAddress.dirty"
-                  class="text-danger"
-                >
-                  Please enter address
-                </p>
-              </div>
-              <!-- City -->
-              <div class="form-outline my-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="City"
-                  name="city"
-                  ngModel
-                  required
-                  pattern="^[a-zA-Z\- ']+$"
-                  minlength="4"
-                  #modelCity="ngModel"
-                  [ngClass]="
-                    modelCity.invalid && modelCity.dirty ? 'is-invalid' : ''
-                  "
-                />
-                <p
-                  *ngIf="modelCity?.errors?.['minlength']?.['requiredLength']&& modelCity.dirty && !modelCity?.errors?.['pattern']"
-                  class="text-danger"
-                >
-                  Please enter city minimum of length
-                  {{modelCity?.errors?.['minlength']?.['requiredLength'] | json
-
-
-                  }}.
-                </p>
-                <p
-                  *ngIf="modelCity?.errors?.['required'] && modelCity.dirty"
-                  class="text-danger"
-                >
-                  Please enter city.
-                </p>
-                <p *ngIf="modelCity?.errors?.['pattern']" class="text-danger">
-                  City should contain only alphabets.
-                </p>
-              </div>
-              <!-- PinCode -->
-              <div class="form-outline my-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="PinCode"
-                  name="zipcode"
-                  ngModel
-                  required
-                  pattern="^^((\\+91-?)|0)?[0-9]{6}$"
-                  minlength="6"
-                  #modelPinCode="ngModel"
-                  [ngClass]="
-                    modelPinCode.invalid && modelPinCode.dirty
-                      ? 'is-invalid'
-                      : ''
-                  "
-                />
-                <p
-                  *ngIf="modelPinCode?.errors?.['required'] && modelPinCode.dirty"
-                  class="text-danger"
-                >
-                  Please enter PinCode.
-                </p>
-                <p
-                  *ngIf="modelPinCode?.errors?.['pattern']"
-                  class="text-danger"
-                >
-                  PinCode must contain 6 digits.
-                </p>
-              </div>
-            </div>
-            <div>
-              <button
-                type="submit"
-                class="btn btn-warning"
-                [disabled]="!addressForm.valid"
-              >
-                Add
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button
-            type="submit"
-            class="btn btn-warning"
-            [disabled]="!orderAddressForm.valid"
-          >
-            Confirm Delivery Address
-          </button>
-        </div>
       </div>
-    </div>
-  </div>
-</div>
-
-<div class="container my-3 d-flex justify-content-around">
-  <!-- Cart -->
-  <div class="col-6 bg-white cart-box rounded position-relative mt-4">
-    <!-- Title -->
-    <div class="p-3 border-bottom">
-      <h5 class="mb-0 fw-bold">Your Cart</h5>
-      <p class="small mb-0">
-        {{
-          getCartCount() > 0
-            ? getCartCount() == 1
-              ? getCartCount() + " Item"
-              : getCartCount() + " Items"
-            : ""
-        }}
-      </p>
-    </div>
-    <div class="d-flex justify-content-around align-items-center border-bottom">
-      <div class="h4">Item</div>
-      <div class="h4">Price</div>
-      <div class="h4">Quantity</div>
-      <div class="h4">Total Price</div>
-    </div>
-    <!-- Items -->
-    <div class="align-items-center" *ngFor="let product of userCart">
-      <!-- Item -->
-      <div
-        class="d-flex align-items-center justify-content-around py-2 px-3 border-bottom"
-      >
-        <!-- Item Details -->
-        <div class="px-2 me-auto">
-          <p class="mb-0">{{ product.productName }}</p>
-          <p class="small text-muted mb-0">{{ product.restaurantName }}</p>
-        </div>
-        <!-- Price -->
-        <div class="me-auto">₹ {{ product.price }}</div>
-        <!-- Plus and Minus -->
-        <div
-          class="d-flex align-items-center justify-content-between rounded-5 border px-1 ms-auto"
-        >
-          <div class="btn">
-            <i
-              class="fa fa-minus text-danger"
-              (click)="addToCart(product.productId, '-')"
-            ></i>
-          </div>
-          <div class="">{{ product.count }}</div>
-          <div class="btn">
-            <i
-              class="fa fa-plus text-success"
-              (click)="addToCart(product.productId, '+')"
-            ></i>
-          </div>
-        </div>
-        <div class="ps-2 me-auto">
-          <i
-            class="fa fa-trash-can text-danger btn"
-            (click)="deleteFromCart(product.id)"
-          ></i>
-          <!-- <div class="text-end">₹ {{ product.price }}</div> -->
-          <!-- Total Price -->
-        </div>
-        <div class="me-auto">₹ {{ product.price * product.count }}</div>
-      </div>
-    </div>
-  </div>
-  <!-- Recommended -->
-  <div class="col-4">
-    <div
-      class="bg-white border rounded position-relative mt-4 mb-5"
-      style="max-height: 430px"
-    >
-      <div class="p-3 border-bottom">
-        <h5 class="mb-0 fw-bold">Recommended</h5>
-        <!-- <p class="small mb-0">4 items from <span class="text-success">Abc</span></p> -->
-      </div>
-      <div class="overflow-auto" *ngFor="let product of products">
-        <div
-          class="cart-box-item d-flex align-items-center py-2 px-3"
-          *ngIf="getProductCount(product.id) === 0"
-        >
-          <!-- <div class="success-dot"></div> -->
-          <div class="px-2">
-            <p class="mb-0">{{ product.title }}</p>
-            <p class="fw-lighter text-dull">
-              {{ product.description.substr(0, 12) }} ...
-            </p>
-          </div>
-          <!-- button -->
-          <div
-            class="d-flex align-items-center justify-content-between rounded-pill ms-auto"
-          >
-            <span>
-              <div *ngIf="getProductCount(product.id) === 0">
-                <button
-                  class="rounded-5 border btn-warning btn"
-                  (click)="addToCart(product.id, '+')"
-                >
-                  Add to Cart
-                </button>
-              </div>
-              <!-- <div
-                *ngIf="getProductCount(product.id) > 0"
-                class="d-flex align-items-center justify-content-center rounded-5 border px-2 ms-auto"
-              >
-                <button
-                  class="btn"
-                  (click)="addToCart(product.id, '-')"
-                  (click)="getProductCount(product.id)"
-                >
-                  <i
-                    class="fa fa-minus text-danger"
-                    (click)="addToCart(product.id, '-')"
-                  ></i>
-                </button>
-                <div>{{ getProductCount(product.id) }}</div>
-                <button class="btn" (click)="addToCart(product.id, '+')">
-                  <i
-                    class="fa fa-plus text-success"
-                    (click)="addToCart(product.id, '+')"
-                  ></i>
-                </button>
-              </div> -->
-            </span>
-          </div>
-          <div class="ms-auto align-items-center">
-            <div class="text-end">₹ {{ product.price }}</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Order and Address -->
-<div class="container d-flex justify-content-between" *ngIf="getCartCount()>0">
-  <div class="col-7 d-flex justify-content-around">
-    <!-- Address -->
-    <div class="ps-3">
-      <!-- offcanvas -->
-      <button
-        class="rounded-5 p-4 bg-white"
-        type="button"
-        data-bs-toggle="offcanvas"
-        data-bs-target="#offcanvasExample"
-      >
-        <span>
-          <h5 class="fw-bold mb-2">Delivery Address</h5>
-          <p class="small text-muted mb-0">
-            Select a saved delivery address or add a new address
-          </p>
-        </span>
-      </button>
-      <!-- Button trigger modal -->
-      <button
-        class="rounded-5 p-3 bg-white"
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        (click)="getUserAddress()"
-      >
-        <span>
-          <h5 class="fw-bold">Delivery Address</h5>
-          <p class="small text-muted mb-0">
-            Select a saved delivery address or add a new address
-          </p>
-        </span>
-      </button>
-    </div>
-    <!-- For Order -->
-    <div class="align-items-center">
-      <!-- Total -->
-      <div class="d-flex justify-content-around h5">
-        <div>Sub Total</div>
-        <div>₹</div>
-      </div>
-      <!-- CheckOut -->
-      <div class="btn btn-warning d-flex flex-column text-center">
-        <h5 class="fw-bold mx-4 pt-1" (click)="placeOrder()">Checkout</h5>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-4"></div>
-</div>
-
-<!-- For Address -->
-<!-- offcanvas -->
-<div
-  class="offcanvas offcanvas-top"
-  style="height: 55vh"
-  tabindex="-1"
-  id="offcanvasExample"
-  aria-labelledby="offcanvasExampleLabel"
->
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Delivery Address</h5>
-    <button
-      type="button"
-      class="btn-close"
-      data-bs-dismiss="offcanvas"
-      aria-label="Close"
-    ></button>
-  </div>
-  <div class="offcanvas-body d-flex justify-content-center">
-    <div class="col-6 dropdown mt-3 text-center">
-      <h5 class="offcanvas-title pb-3">Select a saved delivery address</h5>
-      <button class="btn btn-success" type="button" data-bs-toggle="dropdown">
-        Select Address
-      </button>
-      <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-        <li class="dropdown-item">
-          <div>N0:12, Dubai cross street</div>
-          <div>Dubai</div>
-        </li>
-        <li class="dropdown-item">Address</li>
-        <li class="dropdown-item">Address</li>
-      </ul>
-    </div>
-
-    <div class="col-6 dropdown mt-3">
-      <h5 class="offcanvas-title p-1">Add a new address</h5>
-      <input type="text" placeholder="add new Address" />
     </div>
   </div>
 </div>

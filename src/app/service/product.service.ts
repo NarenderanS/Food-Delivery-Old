@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ProductService {
+  
   products: Product[] = [];
   constructor(private http: HttpClient) {
     this.getAllProducts().subscribe({
@@ -21,10 +22,26 @@ export class ProductService {
   getAllProducts(): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}/product/all`);
   }
+  getRestaurantProducts(id: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(
+      `${urlEndpoint.baseUrl}/restaurant/product/${id}`
+    );
+  }
+  getCategoryProducts(id: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(
+      `${urlEndpoint.baseUrl}/product/category/${id}`
+    );
+  }
 
-  addProduct(product: Product): Observable<AppResponse> {
-    return this.http.post<AppResponse>(
-      `${urlEndpoint.baseUrl}/restaurant/product/add`,
+  addProduct(product: FormData, productId: number): Observable<AppResponse> {
+    if (productId === 0) {
+      return this.http.post<AppResponse>(
+        `${urlEndpoint.baseUrl}/restaurant/product`,
+        product
+      );
+    }
+    return this.http.put<AppResponse>(
+      `${urlEndpoint.baseUrl}/restaurant/product/update`,
       product
     );
   }
@@ -37,8 +54,12 @@ export class ProductService {
       `${urlEndpoint.baseUrl}/restaurant/product/delete/${productId}`
     );
   }
+  downloadPhoto(productId: number): any {
+    return `${urlEndpoint.baseUrl}/photo/downloadFile/product/${productId}`;
+  }
+
   loadProducts(): Product[] {
-    console.log()
+    console.log();
     return this.products;
   }
 }

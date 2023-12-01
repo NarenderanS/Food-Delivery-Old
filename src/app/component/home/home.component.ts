@@ -116,4 +116,14 @@ export class HomeComponent implements OnInit {
       },
     });
   }
+  downloadProductPhoto(productId: number): any {
+    return this.productService.downloadPhoto(productId);
+  }
+  downloadCategoryPhoto(categoryId: number): any {
+    return this.categoryService.downloadPhoto(categoryId);
+  }
+  downloadRestaurantPhoto(restaurantId: number): any {
+    return this.restaurantService.downloadRestaurantPhoto(restaurantId);
+  }
+
 }

@@ -75,7 +75,7 @@ export class AuthService {
     let route: string | null = this.storageService.getRoute();
     // route = 'restaurant_orders';
     if (user.role === CONSTANT.USER) {
-      if (route === null) route = '';
+      if (route === null) route = 'home';
       this.router.navigate(['/' + route], { replaceUrl: true });
     } else if (user.role === CONSTANT.ADMIN) {
       if (route === null) route = 'admin';

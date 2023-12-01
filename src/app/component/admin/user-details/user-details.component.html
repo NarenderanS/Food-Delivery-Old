@@ -34,7 +34,7 @@
   </div>
 
   <div class="col-6">
-    <table class="table" *ngIf="show!=0" let i=0>
+    <table class="table" >
       <thead>
         <tr>
           <th scope="col">S.No</th>
@@ -43,13 +43,13 @@
           <th scope="col">PinCode</th>
         </tr>
       </thead>
-      <tbody *ngFor="let address of userAddresses">
-        <tr>
+      <tbody *ngIf="userAddresses.length===0">
+        <tr *ngIf="address!=null">
          
-          <td>i+1</td>
-          <td>{{ address.address }}</td>
+          <td>snsjnsjn</td>
+          <!-- <td>{{ address.address }}</td>
           <td>{{ address.city }}</td>
-          <td>{{ address.zipcode }}</td>
+          <td>{{ address.zipcode }}</td> -->
         </tr>
       </tbody>
     </table>

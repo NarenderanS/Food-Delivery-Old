@@ -22,10 +22,15 @@ export class OrderService {
       detail
     );
   }
+  // for admin
   getAllOrders(): Observable<AppResponse> {
-    return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}`);
+    return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}/admin/order/all`);
   }
-
+  // for restaurant
+  getRestaurantOrders(restaurantId:number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}/restaurant/order/${restaurantId}`);
+  }
+// From user
   getOrderedProducts(userId: number): Observable<AppResponse> {
     return this.http.get<AppResponse>(
       `${urlEndpoint.baseUrl}/user/order/${userId}`

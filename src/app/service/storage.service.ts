@@ -46,5 +46,4 @@ export class StorageService {
     localStorage.removeItem("route");
   }
 
-
 }

@@ -14,13 +14,36 @@ export class RestaurantService {
   getAllRestaurant(): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${urlEndpoint.baseUrl}/restaurant/all`);
   }
-  addRestaurant(restaurant: Restaurant): Observable<AppResponse> {
+  getRestaurantDetailsByUserId(userId: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(
+      `${urlEndpoint.baseUrl}/restaurant/product/user/${userId}`
+    );
+  }
+  getAllStatus(): Observable<AppResponse> {
+    return this.http.get<AppResponse>(
+      `${urlEndpoint.baseUrl}/restaurant/order/status/all`
+    );
+  }
+  
+  addRestaurant(restaurant: FormData,restaurantId:number): Observable<AppResponse> {
     return this.http.post<AppResponse>(
-      `${urlEndpoint.baseUrl}/admin/restaurant/register`,
+      `${urlEndpoint.baseUrl}/admin/restaurant`,
       restaurant
     );
   }
-  deleteRestaurant(restaurantId: number) {
+  downloadRestaurantPhoto(restaurantId: number): any {
+    return `${urlEndpoint.baseUrl}/photo/downloadFile/restaurant/${restaurantId}`;
+  }
+  
+  updateOrderStatus(order: any): Observable<AppResponse> {
+    return this.http.put<AppResponse>(
+      `${urlEndpoint.baseUrl}/restaurant/order/status`,
+      order
+    );
+  }
+ 
+  
+  deleteRestaurant(restaurantId: number): Observable<AppResponse> {
     return this.http.delete<AppResponse>(
       `${urlEndpoint.baseUrl}/admin/restaurant/${restaurantId}`
     );

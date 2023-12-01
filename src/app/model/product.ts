@@ -11,4 +11,5 @@ export interface Product {
   restaurantId:number;
   count:number;
   vegOrNonVegId:number;
+
 }

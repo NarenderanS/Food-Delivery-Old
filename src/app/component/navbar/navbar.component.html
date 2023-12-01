@@ -111,7 +111,7 @@
 </nav> -->
 <!-- </div> -->
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary nav px-5 py-3">
+<nav class="navbar navbar-expand-lg bg-body-tertiary nav px-5">
   <div class="container-fluid">
     <div>
       <a class="navbar-brand text-white px-5 me-5" routerLink="home"
@@ -130,21 +130,20 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse ps-5 ms-auto" id="navbarScroll">
-      <div class="px-5">
+    <div class="collapse navbar-collapse ps-5 ms-auto " id="navbarScroll">
+      <!-- <div class="px-5" *ngIf="!admin()">
         <form class="d-flex justify-content-center" role="search">
           <input
-            class="form-control me-2"
+            class="form-control p-0 m-2 rounded-1"
             type="search"
-            placeholder="Search"
+            placeholder=" Search"
             aria-label="Search"
-            style="width: 250px"
           />
           <button class="btn" type="submit">
-            <i class="fa fa-magnifying-glass text-white fs-4"></i>
+            <i class="fa fa-magnifying-glass text-white fs-4" ></i>
           </button>
         </form>
-      </div>
+      </div> -->
       <!-- If user loggedIn -->
       <ul
         class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll align-items-center"
@@ -154,56 +153,56 @@
         <li class="nav-item ms-auto">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="home"
             routerLinkActive="active"
           >
-          <i class="fa fa-house-chimney text-black"></i
+          <i class="fa fa-house-chimney text-black" style="background-color: white;"></i
             >
           </a>
         </li>
         <li class="nav-item px-2">
           <a
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="cart"
             routerLinkActive="active"
           >
-            <i class="fa fa-cart-shopping"></i>
-            <span
+            <i class="fa fa-cart-shopping"  style="background-color: white;"></i>
+            <!-- <span
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning"
               >{{getCartCount()}}
               <span class="visually-hidden">Cart</span>
-            </span>
+            </span> -->
           </a>
         </li>
         <li class="nav-item px-2">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="order"
             routerLinkActive="active"
           >
-            <i class="fa fa-bowl-food"></i>
-            <span
+            <i class="fa fa-bowl-food"  style="background-color: white;"></i>
+            <!-- <span
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning"
               >5
               <span class="visually-hidden">Order</span>
-            </span>
+            </span> -->
           </a>
         </li>
         <li class="nav-item px-2">
           <a
             href="#"
-            class="btn btn-light rounded-pill rounded-icon fixed"
+            class="btn border-0"
             routerLink="profile"
             routerLinkActive="active"
           >
-            <i class="fa-regular fa-circle-user"></i>
+            <i class="fa-regular fa-circle-user"  style="background-color: white;"></i>
           </a>
         </li>
         <li class="nav-item px-2">
-          <a class="btn btn-light rounded-pill" (click)="logout()">
-            <i class="fa fa-right-from-bracket text-danger"></i
+          <a class="btn" (click)="logout()">
+            <i class="fa fa-right-from-bracket text-danger"  style="background-color: white;"></i
           ></a>
         </li>
       </ul>
@@ -213,14 +212,14 @@
         style="--bs-scroll-height: 100px"
         *ngIf="restaurant()"
       >
-        <li class="nav-item ms-5 ps-3">
+        <li class="nav-item ">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="restaurant/home"
             routerLinkActive="active"
           >
-          <i class="fa fa-house-chimney text-black"></i
+          <i class="fa fa-house-chimney text-black" style="background-color: white;"></i
             >
           </a>
         </li>
@@ -238,34 +237,29 @@
             </span>
           </a>
         </li> -->
-        <li class="nav-item m-1 px-2">
+        <li class="nav-item m-1">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="restaurant_orders"
             routerLinkActive="active"
           >
-            <i class="fa fa-bowl-food"></i>
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning"
-              >5
-              <span class="visually-hidden">Order</span>
-            </span>
+            <i class="fa fa-bowl-food"  style="background-color: white;"></i>
           </a>
         </li>
-        <li class="nav-item m-1 px-2">
+        <li class="nav-item m-1">
           <a
             href="#"
-            class="btn btn-light rounded-pill rounded-icon fixed"
+            class="btn border-0"
             routerLink="restaurant_profile"
             routerLinkActive="active"
           >
-            <i class="fa-regular fa-circle-user"></i>
+            <i class="fa-regular fa-circle-user"  style="background-color: white;"></i>
           </a>
         </li>
-        <li class="nav-item m-1 px-2">
-          <a class="btn btn-light rounded-pill" (click)="logout()">
-            <i class="fa fa-right-from-bracket text-danger"></i
+        <li class="nav-item">
+          <a class="btn" (click)="logout()">
+            <i class="fa fa-right-from-bracket text-danger"  style="background-color: white;"></i
           ></a>
         </li>
       </ul>
@@ -275,14 +269,14 @@
         style="--bs-scroll-height: 100px"
         *ngIf="admin()"
       >
-        <li class="nav-item ms-5 ps-3">
+        <li class="nav-item ms-5 ps-3 pe-2">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
+            class="btn border-0"
             routerLink="admin/home"
             routerLinkActive="active"
           >
-          <i class="fa fa-house-chimney text-black"></i
+          <i class="fa fa-house-chimney text-black"  style="background-color: white;"></i
             >
           </a>
         </li>
@@ -303,31 +297,26 @@
         <li class="nav-item m-1 px-2">
           <a
             href="#"
-            class="btn btn-light position-relative rounded-pill rounded-icon"
-            routerLink="restaurant_orders"
+            class="btn border-0"
+            routerLink="order"
             routerLinkActive="active"
           >
-            <i class="fa fa-bowl-food"></i>
-            <span
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning"
-              >5
-              <span class="visually-hidden">Order</span>
-            </span>
+            <i class="fa fa-bowl-food"  style="background-color: white;"></i>
           </a>
         </li>
-        <li class="nav-item m-1 px-2">
+        <!-- <li class="nav-item m-1 px-2">
           <a
             href="#"
-            class="btn btn-light rounded-circle rounded-icon fixed"
+            class="btn border-0"
             routerLink="/admin/userDetails"
             routerLinkActive="active"
           >
-          <i class="fa fa-users"></i>
+          <i class="fa fa-users"  style="background-color: white;"></i>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item m-1 px-2">
-          <a class="btn btn-light rounded-pill" (click)="logout()">
-            <i class="fa fa-right-from-bracket text-danger"></i
+          <a class="btn"  (click)="logout()">
+            <i class="fa fa-right-from-bracket text-danger" style="background-color: white;"></i
           ></a>
         </li>
       </ul>
@@ -345,7 +334,7 @@
             routerLink="home"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
-            ><i class="fa fa-house-chimney fs-3 text-white"></i
+            ><i class="fa fa-house-chimney fs-3"  style="background-color: none;"></i
             ><span class="visually-hidden">Home</span></a
           >
         </li>
@@ -354,7 +343,7 @@
             >About</a
           >
         </li>
-        <li class="nav-item ms-2 mb-1 px-2">
+        <!-- <li class="nav-item ms-2 mb-1 px-2">
           <a class="btn btn-light rounded-5" routerLink="login"
             >Login<span
               ><i class="fa fa-right-from-bracket fa-beat ps-2"></i></span
@@ -368,8 +357,8 @@
               class="fa fa-right-from-bracket fa-beat ps-2 text-white"
             ></i
           ></a>
-        </li>
-      </ul>
+        </li> -->
+      </ul> 
     </div>
   </div>
 </nav>

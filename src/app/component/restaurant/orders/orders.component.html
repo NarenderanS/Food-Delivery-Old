@@ -1,12 +1,16 @@
-<div class="container my-3 col-9">
+<div class="container my-3">
   <!-- Title -->
-  <div class="p-3 border-bottom">
+  <div class="p-3">
     <h5 class="mb-0 fw-bold">Orders</h5>
-    <p class="small mb-0">2 items</p>
+    <p class="small mb-0">{{order > 0
+      ? order == 1
+        ? order + " Item"
+        : order + " Items"
+      : ""}}</p>
   </div>
-  <table class="table">
+  <table class="table table-bordered table-striped" *ngIf="orders.length>0">
     <thead>
-      <tr class="text-warning">
+      <tr class="table-primary">
         <th scope="col">Order Id</th>
         <th scope="col">Date & Time</th>
         <th scope="col">Username</th>
@@ -15,56 +19,104 @@
       </tr>
     </thead>
     <tbody *ngFor="let order of orders">
-      <tr>
-        <th scope="row">1</th>
-        <td>10/11/2023</td>
-        <td>Mark</td>
+      <tr class="border-bottom border-3">
+        <th scope="row">{{ order.id }}</th>
+        <td>{{ order.orderTime }}</td>
+        <td>{{ order.username }}</td>
         <td>
+          <div class="small text-muted mb-0">
+            Ordered Date & Time : {{ order.orderTime }}
+          </div>
+          <div>
+            <hr class="link-opacity-10" />
+            <table class="table table-bordered-2 table-striped">
+              <thead>
+                <tr class="table-warning">
+                  <th>Product</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let product of order.orderedProducts">
+                <tr>
+                  <td>
+                    {{ product.title }}
+                  </td>
+                  <td>{{ product.count }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div>
+            <p class="small text-muted mb-0">Delivery Address</p>
+
+            <p class="small text-muted mb-0">
+              {{ order.address.address }},{{ order.address.city }},{{
+                order.address.zipcode
+              }}
+            </p>
+          </div>
+        </td>
+        <!-- <td>
           <tr>
             <th>S.No</th>
             <th>Product Name</th>
             <th>Count</th>
           </tr>
-          <tr>
+          <tr *ngFor="let product of order.orderedProducts">
             <td>1</td>
-            <td><p class="mb-0 text-wrap">Chicken Briyani</p></td>
-            <td><p class="mb-0">1</p></td>
+            <td>
+              <p class="mb-0 text-wrap">{{ product.title }}</p>
+            </td>
+            <td>
+              <p class="mb-0">{{ product.count }}</p>
+            </td>
           </tr>
           <tr>
-            <td> <div>
-              <p class="small text-muted mb-0">Delivery Address</p>
-  
-              <p class="small text-muted mb-0">
-                {{ order.address.address }},{{ order.address.city }},{{
-                  order.address.zipcode
-                }}
-              </p>
-            </div></td>
+            <td>
+              <div class="text-center">
+                <p class="small text-muted mb-0">Delivery Address</p>
+
+                <p class="small text-muted mb-0">
+                  {{ order.address.address }},{{ order.address.city }},{{
+                    order.address.zipcode
+                  }}
+                </p>
+              </div>
+            </td>
           </tr>
-        </td>
-        <td>
-          <p class="small text-muted mb-0 text-wrap">
-            No:13, Dubai cross street, Dubai
-          </p>
-        </td>
+        </td> -->
         <td>
           <div>
-            <button
-              class="btn btn-success"
-              type="button"
-              data-bs-toggle="dropdown"
+            {{ order.orderStatus }}
+
+            <form
+              action=""
+              #orderstatusForm="ngForm"
+              (ngSubmit)="updateStatus(orderstatusForm, order.id)"
             >
-              Order Status
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li class="dropdown-item">Pending</li>
-              <li class="dropdown-item">Out for Delivery</li>
-              <li class="dropdown-item">Delivered</li>
-              <li class="dropdown-item">Cancelled</li>
-            </ul>
+              <select
+                class="form-select p-2 my-3"
+                ngModel
+                id="orderStatus"
+                name="orderStatus"
+                #orderStatus="ngModel"
+                required
+              >
+                <option selected disabled value="">Update Status</option>
+                <option *ngFor="let status of statuses" value="{{ status.id }}">
+                  <span class="ps-2">{{ status.status }}</span>
+                </option>
+              </select>
+              <button type="submit" class="btn btn-success rounded-2">Update</button>
+            </form>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
+  <div *ngIf="orders.length===0">
+    <div class=" ps-5"><h3>No Orders Placed Yet</h3></div>
+    <div class="mb-0" style="width: 40vw;"><ng-lottie [options]="options"></ng-lottie></div>
+  </div>
 </div>
