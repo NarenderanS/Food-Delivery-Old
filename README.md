@@ -1,12 +1,14 @@
 # Food-Delivery
 
 **Description**
-➡️ This online food delivery service is for users to browse restaurant menu,place orders and track food deliveries status.
-➡️ Admin can Add/Edit/Delete category and delete product.
-➡️ Restaurant can Add category and Add/Edit/Delete product.
-➡️ User can see and order food
+
+    ➡️ This online food delivery service is for users to browse restaurant menu,place orders and track food deliveries status.
+    ➡️ Admin can Add/Edit/Delete category and delete product.
+    ➡️ Restaurant can Add category and Add/Edit/Delete product.
+    ➡️ User can see and order food
 
 **Credentials**
+
 👉 Role Admin
     📧Username = "admin" | 🔐Password = "admin"
 👉 Role Restaurant
@@ -15,11 +17,13 @@
     📧Username = "arivu" | 🔐Password = "arivu"
     
 **Technologies used**
+
 👉 '💻-Spring Boot Java' for Back end
 👉 '💻-Angular' for Front end 
 👉 '🗃️-MySql' for Database 
 
 **Screenshots**
+
 🔗 Links
 
 Challenges
